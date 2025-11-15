@@ -1,0 +1,29 @@
+version: "3.9"
+
+services:
+  web-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: polla_web_dev
+    environment:
+      NODE_ENV: development
+      VITE_API_URL: "http://localhost:8080"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    ports:
+      - "8000:8000"
+    command: ["npm", "run", "dev", "--", "--host", "0.0.0.0", "--port", "8000"]
+    profiles: ["dev"]
+
+  web-prod:
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+    container_name: polla_web_prod
+    environment:
+      NODE_ENV: production
+    ports:
+      - "8000:8000"
+    profiles: ["prod"]
