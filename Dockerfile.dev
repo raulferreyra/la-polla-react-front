@@ -1,0 +1,14 @@
+FROM node:22-alpine
+
+WORKDIR /app
+
+# copiar package.json y lock (si existe)
+COPY package*.json ./
+
+# instalar deps
+RUN npm install
+
+# ahora copiamos el resto del código para dev (opcional en dev, pero no hace daño)
+COPY . .
+
+EXPOSE 8000
